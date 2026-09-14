@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { font-family: "DM Sans", sans-serif; color: #f4f3ed; background: #10110f; font-synthesis: none; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; background: #10110f; }
+h1,h2,h3,h4 { font-family: "Space Grotesk", sans-serif; }
+button,a { -webkit-tap-highlight-color: transparent; }
+::selection { background: #c7f36b; color: #10110f; }
+.container-core { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
+.btn-lime { background:#c7f36b; color:#10110f; transition:transform .2s, background .2s; }
+.btn-lime:hover { transform:translateY(-2px); background:#d8ff88; }
+.btn-outline { border:1px solid #41443d; color:#f4f3ed; transition:background .2s,border .2s; }
+.btn-outline:hover { background:#1b1d19; border-color:#c7f36b; }
+.panel { background:#171914; border:1px solid #30332c; }
+.muted { color:#a6aa9d; }
+.grid-lines { background-image: linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px); background-size:48px 48px; }
+.placeholder { background:linear-gradient(135deg,#272b23,#151713); border:1px dashed #626b52; }
+.reveal { animation:reveal .6s ease both; }
+@keyframes reveal { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.reveal{animation:none}}
