@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CORELAB — Train. Transform. Transcend.</title>
+<meta name="description" content="CORELAB functional fitness in Banepa, Nepal.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{fontFamily:{display:["Space Grotesk","sans-serif"],body:["DM Sans","sans-serif"]},colors:{lime:"#c7f36b"}}}};
+</script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}body{margin:0;background:#10110f;color:#f4f3ed;font-family:"DM Sans",sans-serif}h1,h2,h3{font-family:"Space Grotesk",sans-serif}
+.panel{background:#171914;border:1px solid #30332c}.lime{background:#c7f36b;color:#10110f}.lime:hover{background:#ddff91}.outline{border:1px solid #41443d}.outline:hover{border-color:#c7f36b}
+.gridbg{background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:48px 48px}
+.placeholder{background:linear-gradient(135deg,#292d25,#151713);border:1px dashed #697253}.nav{color:#a6aa9d;font-size:.9rem;font-weight:600}.nav:hover{color:#c7f36b}.mobile-nav{text-align:left;border-radius:14px;padding:14px 16px;color:#f4f3ed;font-weight:600}.mobile-nav:hover{background:#ffffff08;color:#c7f36b}.menu-icon{display:grid;gap:4px}.menu-icon span{display:block;width:18px;height:2px;background:#f4f3ed;border-radius:99px;transition:.2s}.menu-open .menu-icon span:nth-child(1){transform:translateY(6px) rotate(45deg)}.menu-open .menu-icon span:nth-child(2){opacity:0}.menu-open .menu-icon span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+</style>
+</head>
+<body>
+
+<header class="fixed top-0 z-50 w-full border-b border-white/10 bg-[#10110f]/90 backdrop-blur-xl">
+<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-5">
+<button onclick="page('home')" class="flex items-center gap-3">
+<span class="grid h-10 w-10 place-items-center rounded-full border border-lime font-bold text-lime">C</span>
+<span><b class="tracking-[.25em]">CORELAB</b><small class="block text-[9px] tracking-[.2em] text-[#a6aa9d]">FUNCTIONAL FITNESS</small></span>
+</button>
+<nav class="hidden gap-5 lg:flex">
+${""}
+<button onclick="page('home')" class="nav">Home</button><button onclick="page('about')" class="nav">About</button><button onclick="page('training')" class="nav">Training</button><button onclick="page('memberships')" class="nav">Memberships</button><button onclick="page('facility')" class="nav">Facility</button><button onclick="page('trainers')" class="nav">Trainers</button><button onclick="page('faq')" class="nav">FAQ</button><button onclick="page('contact')" class="nav">Contact</button>
+</nav>
+<button onclick="page('memberships')" class="lime hidden rounded-full px-5 py-3 font-bold lg:block">Start Training ↗</button>
+<button id="menuBtn" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu()" class="rounded-full border border-white/20 p-3 lg:hidden"><span class="menu-icon"><span></span><span></span><span></span></span></button>
+</div>
+<div id="menu" class="hidden border-t border-white/10 bg-[#10110f]/98 p-5 shadow-2xl lg:hidden">
+<div class="mx-auto grid max-w-7xl gap-2">
+<button onclick="mobilePage('home')" class="mobile-nav">Home</button>
+<button onclick="mobilePage('about')" class="mobile-nav">About CoreLab</button>
+<button onclick="mobilePage('training')" class="mobile-nav">Training</button>
+<button onclick="mobilePage('memberships')" class="mobile-nav">Memberships</button>
+<button onclick="mobilePage('facility')" class="mobile-nav">Facility</button>
+<button onclick="mobilePage('trainers')" class="mobile-nav">Trainers</button>
+<button onclick="mobilePage('faq')" class="mobile-nav">FAQ</button>
+<button onclick="mobilePage('contact')" class="mobile-nav">Contact</button>
+<a href="https://www.google.com/maps/search/?api=1&query=CORELAB+Banepa+Nepal" target="_blank" rel="noopener" class="mt-2 rounded-xl border border-lime/50 p-4 text-left font-bold text-lime">📍 Find CoreLab in Banepa ↗</a>
+</div></div>
+</header>
+
+<main id="app"></main>
+
+<div id="modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/80 p-4 backdrop-blur">
+<div class="panel max-h-[90vh] w-full max-w-lg overflow-auto rounded-2xl p-7">
+<div class="flex justify-between"><div><small class="uppercase tracking-widest text-lime">Membership enquiry</small><h2 id="planTitle" class="mt-2 text-3xl font-bold"></h2></div><button onclick="closeModal()" class="text-2xl">×</button></div>
+<form id="mform" onsubmit="membershipSubmit(event)" class="mt-6 grid gap-4">
+<label>Full name<input id="mname" required class="mt-2 w-full rounded-lg border border-white/15 bg-black/20 p-3"></label>
+<label>Phone<input id="mphone" required type="tel" class="mt-2 w-full rounded-lg border border-white/15 bg-black/20 p-3"></label>
+<label>Preferred contact<select id="mcontact" class="mt-2 w-full rounded-lg border border-white/15 bg-[#171914] p-3"><option>WhatsApp</option><option>Phone call</option></select></label>
+<label>Message<textarea id="mmsg" rows="4" class="mt-2 w-full rounded-lg border border-white/15 bg-black/20 p-3"></textarea></label>
+<button class="lime rounded-full p-3 font-bold">Prepare Enquiry</button>
+<small class="text-[#777b70]">Demo only — no payment or membership activation occurs.</small>
+</form>
+<div id="success" class="hidden rounded-xl bg-lime p-6 text-[#10110f]"><h3 class="text-2xl font-bold">Your enquiry is ready.</h3><p class="mt-2">CoreLab will confirm the next step.</p><a id="wa" target="_blank" class="mt-5 inline-block rounded-full bg-[#10110f] px-5 py-3 font-bold text-white">Continue to WhatsApp ↗</a></div>
+</div></div>
+
+<script>
+const PHONE="9765146040";
+const plans=[
+["1 Month",3500,"A confident starting point."],
+["3 Months",8000,"Build a consistent rhythm."],
+["6 Months",15000,"Commit to your foundation."],
+["12 Months",25000,"Long-term consistency."]
+];
+const goals=["Build strength","Improve fitness","Lose weight","Improve movement","Build consistency","Just getting started"];
+let current="home",selected=null,step=0,answers={};
+
+const ph=(label,cls="h-72")=>`<div class="placeholder ${cls} grid place-items-center rounded-2xl p-6 text-center"><div><div class="text-5xl text-lime">◈</div><b>${label}</b><p class="mt-2 text-xs text-[#a6aa9d]">Replace with CoreLab-approved photography</p></div></div>`;
+const header=(ey,title,text)=>`<section class="gridbg pt-36 pb-24 md:pt-44"><div class="mx-auto max-w-7xl px-5"><small class="uppercase tracking-[.22em] text-lime">${ey}</small><h1 class="mt-4 max-w-4xl text-5xl font-bold md:text-7xl">${title}</h1><p class="mt-6 max-w-2xl text-lg leading-8 text-[#a6aa9d]">${text}</p></div></section>`;
+const cards=()=>plans.map((p,i)=>`<article class="panel flex flex-col rounded-2xl p-6">${i===1?'<span class="mb-5 w-fit rounded-full bg-lime px-3 py-1 text-xs font-bold text-[#10110f]">Popular</span>':""}<small class="text-[#a6aa9d]">${p[0]}</small><strong class="mt-4 text-4xl">NPR ${p[1].toLocaleString()}</strong><small class="mt-1 text-[#a6aa9d]">+ NPR 500 insurance</small><p class="mt-5 text-sm">${p[2]}</p><div class="my-7 space-y-2 text-sm text-[#a6aa9d]"><div>✓ VAT included</div><div>✓ Insurance shown separately</div><div>✓ Enquiry before confirmation</div></div><button onclick="openModal(${i})" class="lime mt-auto rounded-full p-3 font-bold">Ask About ${p[0]}</button></article>`).join("");
+
+function finder(){
+if(step>=4)return `<div class="panel rounded-2xl p-8"><div class="text-4xl text-lime">✓</div><small class="mt-5 block uppercase tracking-widest text-lime">Your next step</small><h3 class="mt-2 text-3xl font-bold">Visit CoreLab.</h3><p class="mt-4 text-[#a6aa9d]">Based on your answers, visit CoreLab, speak with the team, and explore a membership that fits your schedule.</p><div class="mt-6 space-y-2">${Object.entries(answers).map(([k,v])=>`<div class="flex justify-between border-b border-white/10 py-3 text-sm"><span class="text-[#777b70]">${k}</span><span>${v}</span></div>`).join("")}</div><button onclick="finderWA()" class="lime mt-6 rounded-full px-5 py-3 font-bold">Continue on WhatsApp ↗</button><button onclick="resetFinder()" class="outline ml-2 rounded-full px-5 py-3">Start Again</button><p class="mt-5 text-xs text-[#777b70]">Orientation only; not medical advice or a workout prescription.</p></div>`;
+const q=[
+["What is your main goal?",goals,"goal"],
+["What is your experience level?",["Beginner","Some experience","Experienced"],"experience"],
+["When would you like to start?",["This week","Within two weeks","This month","Just exploring"],"start"],
+["Which membership interests you?",["1 Month","3 Months","6 Months","12 Months","Not sure yet"],"membership"]
+][step];
+return `<div class="panel rounded-2xl p-8"><div class="flex justify-between text-xs text-[#777b70]">Step ${step+1} of 4 <span>${(step+1)*25}%</span></div><div class="my-5 h-1 bg-white/10"><div class="h-1 bg-lime" style="width:${(step+1)*25}%"></div></div><h3 class="text-2xl font-bold">${q[0]}</h3><div class="mt-7 grid gap-3 sm:grid-cols-2">${q[1].map(o=>`<button onclick='pick("${q[2]}",${JSON.stringify(o)})' class="rounded-xl border border-white/15 p-5 text-left hover:border-lime">${o}</button>`).join("")}</div></div>`;
+}
+function pick(k,v){answers[k]=v;step++;document.getElementById("finder").innerHTML=finder()}
+function resetFinder(){step=0;answers={};document.getElementById("finder").innerHTML=finder()}
+function finderWA(){wa(`Hello CoreLab team, I used the Fitness Finder. Goal: ${answers.goal}; Experience: ${answers.experience}; Start: ${answers.start}; Membership: ${answers.membership}. I'd like to discuss the next step.`)}
+function wa(msg){window.open("https://wa.me/977"+PHONE+"?text="+encodeURIComponent(msg),"_blank")}
+
+function home(){return `<section class="gridbg pt-36 pb-24 md:pt-44 md:pb-32"><div class="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2"><div><small class="rounded-full border border-white/15 px-4 py-2 uppercase tracking-widest text-lime">Soft Launch · Banepa, Nepal</small><h1 class="mt-8 text-6xl font-bold leading-none md:text-8xl">Train With <span class="text-lime">Purpose.</span></h1><p class="mt-7 max-w-xl text-lg leading-8 text-[#a6aa9d]">Functional fitness for people ready to build strength, improve consistency, and become more capable.</p><div class="mt-8 flex flex-wrap gap-3"><button onclick="page('memberships')" class="lime rounded-full px-6 py-4 font-bold">Explore Memberships ↗</button><button onclick="page('contact')" class="outline rounded-full px-6 py-4 font-bold">Book a Visit</button></div><div class="mt-12 grid grid-cols-2 gap-5 border-t border-white/10 pt-6 sm:grid-cols-4">${["Banepa","Functional","Expert","Soft Launch"].map(x=>`<div><b>${x}</b><small class="block text-[#a6aa9d]">${x==="Banepa"?"Nepal":x==="Functional"?"Fitness":x==="Expert"?"Guidance":"Offer"}</small></div>`).join("")}</div></div>${ph("Hero photography placeholder","min-h-[460px] md:min-h-[600px]")}</div></section>
+<section class="py-24"><div class="mx-auto max-w-7xl px-5"><small class="uppercase tracking-widest text-lime">The CoreLab Idea</small><h2 class="mt-3 text-4xl font-bold md:text-6xl">More Than A Gym.<br>A Place To Build Your Foundation.</h2><div class="mt-10 grid gap-10 md:grid-cols-2"><p class="text-xl leading-9 text-[#a6aa9d]">CoreLab is designed for people who want to train with purpose, improve their strength, build consistency, and become better through every session.</p><div class="grid grid-cols-2 gap-4">${["Premium Equipment","Expert Trainers","Clean Facilities","Functional Training"].map(x=>`<div class="panel rounded-2xl p-6"><div class="mb-10 text-3xl text-lime">◆</div><b>${x}</b></div>`).join("")}</div></div></div></section>
+<section class="bg-lime py-16 text-[#10110f]"><div class="mx-auto flex max-w-7xl flex-col justify-between gap-6 px-5 md:flex-row md:items-center"><h2 class="text-4xl font-bold md:text-6xl">TRAIN. TRANSFORM.<br>TRANSCEND.</h2><button onclick="page('training')" class="rounded-full bg-[#10110f] px-6 py-4 font-bold text-white">Explore Training ↗</button></div></section>
+<section class="py-24"><div class="mx-auto max-w-7xl px-5"><small class="uppercase tracking-widest text-lime">Find Your Starting Point</small><h2 class="mt-3 text-4xl font-bold md:text-6xl">Start Your CoreLab Journey.</h2><div id="finder" class="mt-10">${finder()}</div></div></section>
+<section class="bg-[#0d0e0c] py-24"><div class="mx-auto max-w-7xl px-5"><small class="uppercase tracking-widest text-lime">Soft Launch</small><h2 class="mt-3 mb-10 text-4xl font-bold md:text-6xl">Choose Your Commitment.</h2><div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">${cards()}</div></div></section>
+<section class="py-24"><div class="mx-auto max-w-7xl px-5"><small class="uppercase tracking-widest text-lime">The Environment</small><h2 class="mt-3 mb-10 text-4xl font-bold md:text-6xl">Built For Better Training.</h2><div class="grid gap-5 md:grid-cols-3">${ph("Training Floor","h-80")}${ph("Equipment","h-80")}${ph("Community Moment","h-80")}</div></div></section>
+<section class="pb-24"><div class="mx-auto max-w-7xl px-5"><div class="rounded-3xl bg-[#1b1d19] p-8 md:p-16"><small class="uppercase tracking-widest text-lime">Ready To Begin?</small><h2 class="mt-4 max-w-3xl text-4xl font-bold md:text-7xl">Your stronger foundation starts here.</h2><p class="mt-5 text-lg text-[#a6aa9d]">Ask about memberships, training or your first visit.</p><button onclick="page('contact')" class="lime mt-8 rounded-full px-6 py-4 font-bold">Contact CoreLab ↗</button></div></div></section>`}
+
+function about(){return header("About CoreLab","Build A Stronger Foundation.","CoreLab was created around a simple idea: meaningful progress comes from purposeful training and consistent effort.")+`<section class="py-24"><div class="mx-auto max-w-7xl px-5"><div class="grid gap-10 md:grid-cols-2"><h2 class="text-4xl font-bold md:text-6xl">Purposeful training.<br>Consistent effort.</h2><p class="text-xl leading-9 text-[#a6aa9d]">Our space is designed to help people train with confidence, understand their goals, and build a stronger foundation through expert guidance, quality equipment and a supportive environment.</p></div><div class="mt-16 grid gap-5 md:grid-cols-3">${["TRAIN.","TRANSFORM.","TRANSCEND."].map((x,i)=>`<div class="panel rounded-2xl p-7"><b class="text-4xl ${i===0?"text-lime":""}">${x}</b><p class="mt-4 text-sm text-[#a6aa9d]">${["Show up with purpose.","Build consistency.","Keep moving forward."][i]}</p></div>`).join("")}</div></div></section>`}
+function training(){return header("Training","Train For What Matters To You.","Explore goals that can shape your training journey. Speak with the CoreLab team for guidance suited to your experience.")+`<section class="py-24"><div class="mx-auto max-w-7xl px-5"><div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">${goals.map((g,i)=>`<div class="panel rounded-2xl p-7"><small class="text-lime">${String(i+1).padStart(2,"0")}</small><h3 class="mt-14 text-2xl font-bold">${g}</h3><p class="mt-4 text-sm leading-7 text-[#a6aa9d]">A purposeful place to begin. Discuss your goals with a CoreLab trainer.</p></div>`).join("")}</div></div></section>`}
+function memberships(){return header("Memberships · Soft Launch","Choose Your Commitment.","Exclusive 10-Day Membership Rates. Insurance is NPR 500 additional and shown separately.")+`<section class="py-24"><div class="mx-auto max-w-7xl px-5"><div class="grid gap-5 md:grid-cols-2 lg:grid-cols-4">${cards()}</div><div class="mt-12 rounded-2xl border border-white/10 p-7"><b>Important</b><p class="mt-3 text-sm text-[#a6aa9d]">An enquiry does not constitute payment, membership activation or booking confirmation. CoreLab must confirm the next step.</p></div></div></section>`}
+function facility(){return header("Facility","Built For Better Training.","A clean, organised functional fitness environment designed to support purposeful training.")+`<section class="py-24"><div class="mx-auto max-w-7xl px-5"><div class="grid gap-5 md:grid-cols-2">${ph("Exterior")}${ph("Main Training Floor")}${ph("Equipment")}${ph("Functional Training Area")}${ph("Trainer Assisting Member")}${ph("Community Moment")}</div><p class="mt-7 text-sm text-[#777b70]">Temporary placeholders are used until CoreLab-approved photography is supplied.</p></div></section>`}
+function trainers(){return header("Trainers","Meet The People Behind Your Progress.","Trainer profiles will be added with CoreLab-approved names, photographs, qualifications, specialties and schedules.")+`<section class="py-24"><div class="mx-auto max-w-7xl px-5"><div class="grid gap-5 md:grid-cols-3">${[1,2,3].map(n=>`<article class="panel overflow-hidden rounded-2xl">${ph("Trainer Profile Coming Soon","h-72 rounded-none border-0")}<div class="p-6"><small class="text-lime">Profile ${String(n).padStart(2,"0")}</small><h3 class="mt-2 text-xl font-bold">Trainer Information Coming Soon</h3><p class="mt-3 text-sm text-[#a6aa9d]">Approved name, qualification, specialty and biography will be added before launch.</p></div></article>`).join("")}</div></div></section>`}
+const faqs=[["Is CoreLab suitable for beginners?","Yes. Beginners can contact the CoreLab team to discuss their goals, experience and the best way to start."],["Where is CoreLab located?","CoreLab is based in Banepa, Nepal. The website should publish the exact street address only after CoreLab confirms it."],["What membership plans are available?","1-month, 3-month, 6-month and 12-month plans are currently shown for the soft-launch offer."],["Is insurance included?","Insurance is listed separately at NPR 500 additional."],["Are the prices VAT included?","The provided membership prices are VAT included. Insurance is additional."],["How can I join?","Submit an enquiry through the website or contact CoreLab at 9765146040."],["Can I visit before joining?","You can request a visit through the website. CoreLab should confirm the actual visit process."],["Do you offer personal training?","This service has not yet been confirmed. Please ask the CoreLab team."],["What are the opening hours?","Opening hours will be added after CoreLab provides and approves them."],["Do I need previous gym experience?","Contact the team to discuss how to begin based on your experience."]];
+function faq(){return header("FAQ","Questions Before Your First Session?","A few useful answers for visitors exploring CoreLab.")+`<section class="py-24"><div class="mx-auto max-w-3xl px-5"><div class="divide-y divide-white/10 border-y border-white/10">${faqs.map((f,i)=>`<div><button onclick="faqToggle(${i})" class="flex w-full justify-between py-6 text-left font-bold"><span>${f[0]}</span><span id="fi${i}" class="text-xl text-lime">+</span></button><div id="fa${i}" class="hidden pb-6 text-sm leading-7 text-[#a6aa9d]">${f[1]}</div></div>`).join("")}</div></div></section>`}
+function faqToggle(i){const a=document.getElementById("fa"+i);a.classList.toggle("hidden");document.getElementById("fi"+i).textContent=a.classList.contains("hidden")?"+":"×"}
+function contact(){return header("Contact","Ready To Start?","Have questions about membership, training or your first visit? Connect with the CoreLab team.")+`<section class="py-24"><div class="mx-auto grid max-w-7xl gap-10 px-5 md:grid-cols-2"><div class="panel rounded-2xl p-8"><small class="uppercase tracking-widest text-lime">Connect With CoreLab</small><h2 class="mt-3 text-3xl font-bold">Take Your Next Step.</h2><div class="mt-8 space-y-6 text-sm"><div><small class="text-lime">LOCATION</small><p>Banepa, Nepal</p></div><div><small class="text-lime">PHONE</small><p>9765146040</p></div><div><small class="text-lime">INSTAGRAM</small><p>@atcorelab</p></div></div><div class="mt-8 flex flex-wrap gap-3"><button onclick="wa('Hello CoreLab team, I’m interested in learning more about your membership plans and visiting the facility.')" class="lime rounded-full px-5 py-3 font-bold">WhatsApp Us ↗</button><a href="tel:+9779765146040" class="outline rounded-full px-5 py-3 font-bold">Call Now ↗</a><a href="https://instagram.com/atcorelab" target="_blank" rel="noopener" class="outline rounded-full px-5 py-3 font-bold">Instagram ↗</a></div></div>
+<div class="panel rounded-2xl overflow-hidden min-h-[360px] relative">
+<iframe title="CoreLab Banepa location map" class="absolute inset-0 h-full w-full border-0 opacity-80" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=CORELAB%20Banepa%20Nepal&output=embed"></iframe>
+<div class="absolute bottom-4 left-4 right-4 rounded-2xl border border-white/10 bg-[#10110f]/90 p-4 backdrop-blur"><small class="text-lime uppercase tracking-widest">Official location</small><p class="mt-1 font-bold">Banepa, Nepal</p><p class="text-xs text-[#a6aa9d]">Exact street address should be confirmed by CoreLab before launch.</p><a href="https://www.google.com/maps/search/?api=1&query=CORELAB+Banepa+Nepal" target="_blank" rel="noopener" class="mt-3 inline-block text-sm font-bold text-lime">Open in Google Maps ↗</a></div></div><div class="panel rounded-2xl p-8"><div id="cf"><form onsubmit="contactSubmit(event)" class="grid gap-4"><label>Full Name<input required class="mt-2 w-full rounded-lg border border-white/15 bg-black/20 p-3"></label><label>Phone Number<input required type="tel" class="mt-2 w-full rounded-lg border border-white/15 bg-black/20 p-3"></label><label>Enquiry Type<select class="mt-2 w-full rounded-lg border border-white/15 bg-[#171914] p-3"><option>Membership enquiry</option><option>Book a visit</option><option>Beginner guidance</option><option>Training information</option><option>Partnership</option><option>Other</option></select></label><label>Message<textarea rows="5" class="mt-2 w-full rounded-lg border border-white/15 bg-black/20 p-3"></textarea></label><button class="lime rounded-full p-3 font-bold">Prepare Enquiry</button><small class="text-[#777b70]">Demo enquiry — connect to CoreLab's real inbox before launch.</small></form></div></div></div></section>`}
+function contactSubmit(e){e.preventDefault();document.getElementById("cf").innerHTML=`<div class="rounded-xl bg-lime p-7 text-[#10110f]"><h3 class="text-2xl font-bold">Thanks for reaching out.</h3><p class="mt-3 text-sm">Your enquiry is ready for the CoreLab team. This demo does not send the form automatically.</p><button onclick="page('home')" class="mt-6 rounded-full bg-[#10110f] px-5 py-3 font-bold text-white">Back Home</button></div>`}
+
+function toggleMenu(){const m=document.getElementById("menu"),b=document.getElementById("menuBtn");const open=m.classList.toggle("hidden")==false;b.setAttribute("aria-expanded",String(open));b.setAttribute("aria-label",open?"Close menu":"Open menu");b.classList.toggle("menu-open",open)}
+function mobilePage(p){page(p);const m=document.getElementById("menu"),b=document.getElementById("menuBtn");m.classList.add("hidden");b.setAttribute("aria-expanded","false");b.setAttribute("aria-label","Open menu");b.classList.remove("menu-open")}
+
+function page(p){current=p;window.scrollTo(0,0);document.getElementById("app").innerHTML=({home,about,training,memberships,facility,trainers,faq,contact}[p]||home)()}
+function openModal(i){selected=plans[i];document.getElementById("planTitle").textContent=selected[0];document.getElementById("modal").classList.remove("hidden");document.getElementById("modal").classList.add("flex");document.getElementById("mform").classList.remove("hidden");document.getElementById("success").classList.add("hidden")}
+function closeModal(){document.getElementById("modal").classList.add("hidden");document.getElementById("modal").classList.remove("flex")}
+function membershipSubmit(e){e.preventDefault();let msg=`Hello CoreLab team, my name is ${mname.value}. I'm interested in the ${selected[0]} membership. My phone is ${mphone.value}. Preferred contact: ${mcontact.value}. ${mmsg.value}`;document.getElementById("wa").href="https://wa.me/977"+PHONE+"?text="+encodeURIComponent(msg);document.getElementById("mform").classList.add("hidden");document.getElementById("success").classList.remove("hidden")}
+page("home");
+</script>
+<style>.nav{color:#a6aa9d;font-size:14px}.nav:hover{color:#fff}</style>
+</body>
+</html>
